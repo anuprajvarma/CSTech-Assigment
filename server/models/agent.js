@@ -9,13 +9,16 @@ const agentSchema = new mongoose.Schema({
     required: true,
     type: Number,
   },
-  notes: {
-    type: String,
+  countryCode: {
+    required: true,
+    type: Number,
   },
   email: {
+    required: true,
     type: String,
   },
   password: {
+    required: true,
     type: String,
   },
 });

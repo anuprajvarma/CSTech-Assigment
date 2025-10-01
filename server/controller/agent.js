@@ -7,7 +7,6 @@ const AddAgentHandler = async (req, res) => {
 
   if (!agent) {
     agent = await Agent.create(req.body);
-    console.log(agent);
     res.json(agent);
   } else {
     res.json(agent);
