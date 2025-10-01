@@ -20,6 +20,11 @@ export default function Login() {
       const data = await res.json();
 
       console.log(data);
+
+      if (data.email) {
+        localStorage.setItem("user", data._id);
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
