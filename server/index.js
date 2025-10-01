@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 
 const authRoute = require("./router/auth");
 const agentRoute = require("./router/agent");
+const tasksRoute = require("./router/tasks");
 
 const app = express();
 
@@ -28,6 +29,7 @@ mongoose
 
 app.use("/api/auth", authRoute);
 app.use("/api/agent", agentRoute);
+app.use("/api/tasks", tasksRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`✅ Server running on http://localhost:${process.env.PORT}`);
