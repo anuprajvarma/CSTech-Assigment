@@ -6,14 +6,22 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (email === "anupraj1854@gmail.com") {
-      localStorage.setItem("user", JSON.stringify({ email, password }));
-      navigate("/dashboard");
-    } else {
-      alert("only admin can login");
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
