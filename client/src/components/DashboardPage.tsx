@@ -73,7 +73,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative">
-      {isOpen && <AgentForm />}
+      {isOpen && <AgentForm setIsOpen={setIsOpen} />}
       <div className="w-full h-svh flex justify-center z-0 absolute mt-8">
         <div className="md:w-6/12 w-full h-full flex flex-col">
           <div className="w-full flex justify-center lg:justify-between">

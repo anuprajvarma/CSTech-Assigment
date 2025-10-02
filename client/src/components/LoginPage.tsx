@@ -1,9 +1,11 @@
+import { error } from "console";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -19,11 +21,11 @@ export default function Login() {
 
       const data = await res.json();
 
-      console.log(data);
-
       if (data.email) {
         localStorage.setItem("user", data._id);
-        navigate("/dashboard");
+        navigate("/");
+      } else {
+        setErrorMessage(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -56,6 +58,9 @@ export default function Login() {
         <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
           Login
         </button>
+        <div className="flex justify-center mt-4">
+          <p className="text-red-700">{errorMessage}</p>
+        </div>
       </form>
     </div>
   );

@@ -1,6 +1,16 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react";
 
-export default function AgentForm() {
+export default function AgentForm({
+  setIsOpen,
+}: {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
@@ -28,6 +38,9 @@ export default function AgentForm() {
       });
 
       const data = await res.json();
+      if (data) {
+        setIsOpen(false);
+      }
 
       console.log(data);
     } catch (error) {
@@ -41,6 +54,11 @@ export default function AgentForm() {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md"
       >
+        <div className="flex justify-end">
+          <button className="text-2xl" onClick={() => setIsOpen(false)}>
+            X
+          </button>
+        </div>
         <h2 className="text-2xl font-bold mb-6 text-center">Add Agent</h2>
 
         {/* Name */}
@@ -113,17 +131,10 @@ export default function AgentForm() {
         </div>
 
         {/* Buttons: Add Agent (left) and Submit (right) */}
-        <div className="flex justify-between">
-          <button
-            type="button"
-            className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
-            onClick={() => alert("Add Agent button clicked")}
-          >
-            Add Agent
-          </button>
+        <div className="flex w-full">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            className="px-4 w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
           >
             Submit
           </button>
