@@ -1,5 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import AgentForm from "./AgentFormModal";
+import { useNavigate } from "react-router-dom";
 
 interface TaskType {
   _id: string;
@@ -18,25 +19,31 @@ interface AgentType {
 }
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<TaskType[]>([]);
   const [agents, setAgents] = useState<AgentType[]>([]);
 
   useEffect(() => {
     const fetchtask = async () => {
-      const res = await fetch("http://localhost:5000/api/tasks");
+      const res = await fetch("http://localhost:5000/api/tasks", {
+        credentials: "include",
+      });
 
       const result = await res.json();
-      setData(result);
+      result.redirect ? navigate("/login") : setData(result);
     };
     fetchtask();
   }, []);
 
   useEffect(() => {
     const fetchAgents = async () => {
-      const res = await fetch("http://localhost:5000/api/agent");
+      const res = await fetch("http://localhost:5000/api/agent", {
+        credentials: "include",
+      });
 
       const result = await res.json();
+      result.redirect ? navigate("/login") : setAgents(result);
       setAgents(result);
     };
     fetchAgents();
@@ -50,6 +57,7 @@ export default function Dashboard() {
 
     await fetch("http://localhost:5000/api/tasks/upload", {
       method: "POST",
+      credentials: "include",
       body: formData,
     });
   };
