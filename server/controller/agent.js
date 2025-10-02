@@ -13,4 +13,9 @@ const AddAgentHandler = async (req, res) => {
   }
 };
 
-module.exports = { AddAgentHandler };
+const getAgentHandler = async (req, res) => {
+  const agent = await Agent.find();
+  res.json(agent);
+};
+
+module.exports = { AddAgentHandler, getAgentHandler };

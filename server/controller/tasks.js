@@ -1,6 +1,7 @@
 const Papa = require("papaparse");
 
 const Task = require("../models/tasks");
+const Agent = require("../models/agent");
 
 const AddTaskHandler = async (req, res) => {
   try {
@@ -27,13 +28,7 @@ const AddTaskHandler = async (req, res) => {
     }
 
     // Distribute among 5 agents
-    const agents = [
-      "68dd9a60be9ccbf05eab3492",
-      "68ddb3678b3fed3985e3a7c4",
-      "68ddb3728b3fed3985e3a7c7",
-      "68ddb37e8b3fed3985e3a7ca",
-      "68ddb3888b3fed3985e3a7cd",
-    ];
+    const agents = await Agent.find();
     const tasks = [];
 
     records.forEach((record, index) => {
