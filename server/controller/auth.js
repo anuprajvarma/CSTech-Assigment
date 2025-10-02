@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const { setUser } = require("../service/auth");
+const { setUser } = require("../middleware/auth");
 
 const handleSignout = async (req, res) => {
   res.clearCookie("uid", {
