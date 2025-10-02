@@ -1,4 +1,3 @@
-import { error } from "console";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,14 +9,16 @@ export default function Login() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/api/auth/login`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await res.json();
 

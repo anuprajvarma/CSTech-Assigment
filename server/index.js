@@ -11,7 +11,7 @@ const authenticateUser = require("./middleware/authenticate");
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [process.env.ALLOW_ORIGIN];
 
 app.use(
   cors({
@@ -23,9 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 mongoose
-  .connect(
-    "mongodb+srv://anupraj1854_db_user:Im6RK27CYz4n9qWU@cluster0.36zeulp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URL)
   .then(console.log("connection stablished"));
 
 app.use("/api/auth", authRoute);

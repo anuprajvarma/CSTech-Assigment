@@ -26,9 +26,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchtask = async () => {
-      const res = await fetch("http://localhost:5000/api/tasks", {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/api/tasks`,
+        {
+          credentials: "include",
+        }
+      );
 
       const result = await res.json();
       result.redirect ? navigate("/login") : setData(result);
@@ -38,9 +41,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchAgents = async () => {
-      const res = await fetch("http://localhost:5000/api/agent", {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/api/agent`,
+        {
+          credentials: "include",
+        }
+      );
 
       const result = await res.json();
       result.redirect ? navigate("/login") : setAgents(result);
@@ -55,7 +61,7 @@ export default function Dashboard() {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
 
-    await fetch("http://localhost:5000/api/tasks/upload", {
+    await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/tasks/upload`, {
       method: "POST",
       credentials: "include",
       body: formData,
@@ -63,10 +69,13 @@ export default function Dashboard() {
   };
 
   const handleSignOut = async () => {
-    const res = await fetch("http://localhost:5000/api/auth/signout", {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/api/auth/signout`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     const result = await res.json();
     result.redirect && navigate("/login");
   };
