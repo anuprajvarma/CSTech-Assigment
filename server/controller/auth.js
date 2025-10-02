@@ -7,7 +7,7 @@ const handleSignout = async (req, res) => {
     secure: false, // true in production with HTTPS
     sameSite: "lax", // or "none" with secure: true if cross-site
   });
-  res.json({ success: true, redirectTo: "/login" });
+  res.json({ success: true, redirect: "/login" });
 };
 
 const LoginHandler = async (req, res) => {

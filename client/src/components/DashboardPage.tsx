@@ -62,11 +62,52 @@ export default function Dashboard() {
     });
   };
 
+  const handleSignOut = async () => {
+    const res = await fetch("http://localhost:5000/api/auth/signout", {
+      method: "POST",
+      credentials: "include",
+    });
+    const result = await res.json();
+    result.redirect && navigate("/login");
+  };
+
   return (
     <div className="relative">
       {isOpen && <AgentForm />}
-      <div className="w-full h-svh flex justify-center z-0 absolute">
-        <div className="w-6/12 h-full flex justify-center">
+      <div className="w-full h-svh flex justify-center z-0 absolute mt-8">
+        <div className="md:w-6/12 w-full h-full flex flex-col">
+          <div className="w-full flex justify-center lg:justify-between">
+            <button
+              onClick={handleSignOut}
+              className="text-xl h-11 p-2 rounded border hidden lg:block"
+            >
+              Sign Out
+            </button>
+            <div className="">
+              <div className="flex gap-2 justify-between">
+                <button
+                  className="text-xl p-2 rounded border"
+                  onClick={() => setIsOpen(true)}
+                >
+                  Add Agent
+                </button>
+                <button
+                  onClick={handleSignOut}
+                  className="text-xl h-11 p-2 rounded border block lg:hidden"
+                >
+                  Sign Out
+                </button>
+              </div>
+              <div className="flex items-center">
+                <label className="text-xl">upload file:</label>
+                <input
+                  type="file"
+                  onChange={handleUpload}
+                  className="p-2 max-w-[14rem]"
+                />
+              </div>
+            </div>
+          </div>
           <div className="flex flex-col gap-2 w-full">
             {data.length > 0 ? (
               <div className="flex flex-col w-full gap-4 mt-4">
