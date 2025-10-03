@@ -2,13 +2,11 @@ const jwt = require("jsonwebtoken");
 const secret = "anuprajvarma";
 
 const setUser = (user) => {
-  // console.log(user);
   const token = jwt.sign(
     {
       _id: user._id,
-      imageUrl: user.imageUrl,
       email: user.email,
-      name: user.name,
+      password: user.name,
     },
     secret,
     {
