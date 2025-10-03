@@ -44,8 +44,6 @@ export default function AgentForm({
       if (data) {
         setIsOpen(false);
       }
-
-      console.log(data);
     } catch (error) {
       console.error("Error:", error);
     }

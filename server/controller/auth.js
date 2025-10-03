@@ -30,8 +30,8 @@ const LoginHandler = async (req, res) => {
   const token = setUser(user);
   res.cookie("uid", token, {
     httpOnly: true,
-    secure: false, // true in production with HTTPS
-    sameSite: "lax", // or "none" with secure: true if cross-site
+    secure: true, // true in production with HTTPS
+    sameSite: "none", // or "none" with secure: true if cross-site
   });
   res.json(user);
 };

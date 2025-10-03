@@ -2,7 +2,7 @@ const Agent = require("../models/agent");
 
 const AddAgentHandler = async (req, res) => {
   const { email } = req.body;
-  console.log(req.body);
+  console.log("req body " + req.body);
   let agent = await Agent.findOne({ email });
 
   if (!agent) {
