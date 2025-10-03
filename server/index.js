@@ -30,6 +30,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/agent", authenticateUser, agentRoute);
 app.use("/api/tasks", authenticateUser, tasksRoute);
 
+app.get("/", (req, res) => {
+  res.send("hellow get call");
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`✅ Server running on http://localhost:${process.env.PORT}`);
 });

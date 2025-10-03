@@ -34,6 +34,7 @@ export default function Dashboard() {
       );
 
       const result = await res.json();
+      console.log(result);
       result.redirect ? navigate("/login") : setData(result);
     };
     fetchtask();
