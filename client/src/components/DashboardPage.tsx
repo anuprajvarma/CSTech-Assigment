@@ -78,7 +78,11 @@ export default function Dashboard() {
       }
     );
     const result = await res.json();
-    result.redirect && navigate("/login");
+
+    if (result.redirect) {
+      localStorage.removeItem("user");
+      navigate("/login");
+    }
   };
 
   return (
