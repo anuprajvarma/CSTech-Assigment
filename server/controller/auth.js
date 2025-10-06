@@ -4,8 +4,8 @@ const { setUser } = require("../middleware/auth");
 const handleSignout = async (req, res) => {
   res.clearCookie("uid", {
     httpOnly: true,
-    secure: false, // true in production with HTTPS
-    sameSite: "lax", // or "none" with secure: true if cross-site
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
   res.json({ success: true, redirect: "/login" });
 };
@@ -30,8 +30,8 @@ const LoginHandler = async (req, res) => {
   const token = setUser(user);
   res.cookie("uid", token, {
     httpOnly: true,
-    secure: false, // true in production with HTTPS
-    sameSite: "lax", // or "none" with secure: true if cross-site
+    secure: true,
+    sameSite: "none",
   });
   res.json(user);
 };

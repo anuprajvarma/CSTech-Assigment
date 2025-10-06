@@ -11,11 +11,11 @@ const authenticateUser = require("./middleware/authenticate");
 
 const app = express();
 
-const allowedOrigins = [process.env.ALLOW_ORIGIN];
+// const allowedOrigins = [process.env.ALLOW_ORIGIN];
 
 app.use(
   cors({
-    origin: allowedOrigins, // Allow Next.js frontend to access this API
+    origin: process.env.ALLOW_ORIGIN, // Allow Next.js frontend to access this API
     credentials: true,
   })
 );
