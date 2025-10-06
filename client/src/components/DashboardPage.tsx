@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, use, useEffect, useState } from "react";
 import AgentForm from "./AgentFormModal";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<TaskType[]>([]);
   const [agents, setAgents] = useState<AgentType[]>([]);
+  const [isUploaded, setIsUploaded] = useState<boolean>();
 
   useEffect(() => {
     const fetchtask = async () => {
@@ -38,7 +39,7 @@ export default function Dashboard() {
       result.redirect ? navigate("/login") : setData(result);
     };
     fetchtask();
-  }, []);
+  }, [isUploaded]);
 
   useEffect(() => {
     const fetchAgents = async () => {
@@ -54,19 +55,29 @@ export default function Dashboard() {
       setAgents(result);
     };
     fetchAgents();
-  }, []);
+  }, [isUploaded]);
 
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (agents.length === 0) {
+      return alert("add atleast one agent");
+    }
     if (!e.target.files || e.target.files.length === 0) return;
 
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
 
-    await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/tasks/upload`, {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/api/tasks/upload`,
+      {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      }
+    );
+    const data = await res.json();
+    if (data.message === "Upload successful") {
+      setIsUploaded(true);
+    }
   };
 
   const handleSignOut = async () => {
@@ -145,13 +156,9 @@ export default function Dashboard() {
                 ))}
               </div>
             ) : (
-              <>
-                <button onClick={() => setIsOpen(true)} className="p-2">
-                  Add Agents
-                </button>
-                <p>or</p>
-                <input type="file" onChange={handleUpload} className="p-2" />
-              </>
+              <div className="w-full h-svh flex justify-center items-center text-xl">
+                <p>Add agents and uplaod CSV file</p>
+              </div>
             )}
           </div>
         </div>
